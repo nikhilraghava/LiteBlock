@@ -1,6 +1,9 @@
 import hashlib as hasher
 import datetime as date
 
+# Define my name
+my_name = "Nikhil Raghavendra"
+
 # Define a block
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
@@ -21,14 +24,14 @@ class Block:
 def create_genesis_block():
     # Manually construct a block with
     # index zero and arbitrary previous hash
-    return Block(0, date.datetime.now(), "Genesis Block", "0")
+    return Block(0, date.datetime.now(), "Hello World!", "0")
 
 
 # Generate all later blocks in the blockchain
 def next_block(last_block):
     this_index = last_block.index + 1
     this_timestamp = date.datetime.now()
-    this_data = "Hey! I'm block " + str(this_index)
+    this_data = my_name[this_index - 1]
     this_hash = last_block.hash
     return Block(this_index, this_timestamp, this_data, this_hash)
 
@@ -37,9 +40,15 @@ def next_block(last_block):
 blockchain = [create_genesis_block()]
 previous_block = blockchain[0]
 
+
+# Fetch data about a block
+def fetch_block_data(block):
+    return blockchain[block].data
+
+
 # How many blocks should we add to the chain
 # after the genesis block
-num_of_blocks_to_add = len("Nikhil Raghavendra")
+num_of_blocks_to_add = len(my_name)
 
 # Add blocks to the chain
 for i in range(0, num_of_blocks_to_add):
@@ -49,3 +58,7 @@ for i in range(0, num_of_blocks_to_add):
     # Tell everyone about it!
     print("Block #{} has been added to the blockchain!".format(block_to_add.index))
     print("Hash: {}\n".format(block_to_add.hash))
+
+# Fetch data in a specific block
+block = 0
+print("Block {} contains {}".format(block, fetch_block_data(block)))
